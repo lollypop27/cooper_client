@@ -42,15 +42,25 @@ angular.module('starter.controllers', [])
 })
 
 .controller('TestController', function($scope) {
+  $scope.gender = ['Male', 'Female']
+  $scope.ageValues = {
+    min: 20,
+    max: 60,
+    value: 20
+  };
+  $scope.distanceValues = {
+    min: 1000,
+    max: 3500,
+    value: 1000
+  };
   $scope.data = {};
   $scope.calculateCooper = function() {
     var person = new Person({
       gender: $scope.data.gender,
-      age: $scope.data.age,
-      distance: $scope.data.distance
+      age: $scope.data.age
     });
-    person.cooper_result($scope.data);
+    person.assessCooper($scope.data.distance);
     $scope.person = person;
-    console.log($scope.person);
+    console.log($scope.person)
   };
 });
