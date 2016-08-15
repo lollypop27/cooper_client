@@ -8,7 +8,7 @@ angular.module('starter.controllers', [])
                                  $ionicLoading) {
 
   $rootScope.$on('auth:login-success', function(ev, user) {
-    $scope.currentUser = user;
+    $scope.currentUser = angular.extend(user, $auth.retrieveData('auth_headers'));
   });
 
   $scope.loginData = {};
@@ -56,6 +56,26 @@ angular.module('starter.controllers', [])
   };
 })
 
+.controller('PerformanceCtrl', function($scope, performanceData, $ionicLoading, $ionicPopup, $state){
+  $scope.saveData = function(person){
+    var data = {performance_data: {data: {message: $scope.result}}};
+    $ionicLoading.show({
+      template: 'Saving...'
+    });
+    performanceData.save(data, function(response){
+      $ionicLoading.hide();
+      $scope.showAlert('Sucess', $scope.result);
+    }, function(error){
+      $ionicLoading.hide();
+      $scope.showAlert('Failure', error.statusText);
+    });
+  };
+
+  $scope.retrieveData = function(){
+
+  };
+})
+
 .controller('TestController', function($scope) {
   $scope.gender = ['Male', 'Female'];
   $scope.ageValues = {
@@ -69,14 +89,14 @@ angular.module('starter.controllers', [])
     value: 1000
   };
   $scope.data = {};
+  // $scope.result = '';
   $scope.calculateCooper = function() {
-    var person = new Person({
+    $scope.person = new Person({
       gender: $scope.data.gender,
-      age: $scope.data.age,
-      distance: $scope.data.distance
+      age: $scope.data.age
     });
-    person.cooper_result($scope.data);
-    $scope.person = person;
-    console.log($scope.person);
+
+    $scope.result = cooperAssessmentOf($scope.person,$scope.data.distance);
+    console.log($scope.result);
   };
 });
