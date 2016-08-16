@@ -64,7 +64,7 @@ angular.module('starter.controllers', [])
     });
     performanceData.save(data, function(response){
       $ionicLoading.hide();
-      $scope.showAlert('Sucess', $scope.result);
+      $scope.showAlert('Sucess', response.message);
     }, function(error){
       $ionicLoading.hide();
       $scope.showAlert('Failure', error.statusText);
@@ -72,10 +72,19 @@ angular.module('starter.controllers', [])
   };
 
   $scope.retrieveData = function(){
+   //Still not implemented...
+   };
 
+  $scope.showAlert = function(message, content) {
+    var alertPopup = $ionicPopup.alert({
+      title: message,
+      template: content
+    });
+    alertPopup.then(function(res) {
+    // Place some action here if needed...
+    });
   };
-})
-
+  })
 .controller('TestController', function($scope) {
   $scope.gender = ['Male', 'Female'];
   $scope.ageValues = {
