@@ -12,5 +12,8 @@
   },
   "resolutions": {
     "angular": "1.5.8"
-  }
+  },
+  "resolvers": [
+    "bower-npm-resolver"
+  ]
 }
